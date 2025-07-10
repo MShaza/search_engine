@@ -1,0 +1,39 @@
+# === C++ Build Artifacts ===
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.obj
+*.so
+*.a
+*.out
+*.exe
+*.log
+
+# === Editor & System Files ===
+*.DS_Store
+*.swp
+*.swo
+*~
+
+# === Python Related ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === Virtual Environment ===
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# === VSCode or IDEs ===
+.vscode/
+.idea/
+
+# === Generated Binaries ===
+search_engine
