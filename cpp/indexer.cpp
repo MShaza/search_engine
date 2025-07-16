@@ -60,7 +60,7 @@ void searchEngine::addDocument(const std::string &docText)
     std::cout << "[Debug - searchEngine::addDocument] Function enter" << std::endl;
     int docId = generateId();
     documents[docId] = docText;
-    // std::cout << "[Debug - searchEngine::addDocument] ID: "<< docId << ", Contect: "<< docText<< std::endl;
+    std::cout << "[Debug - searchEngine::addDocument] ID: "<< docId << ", Contect: "<< docText<< std::endl;
     totalDocs++;
     std::cout << "[Debug - searchEngine::addDocument] Function ended succesfully" << std::endl;
 }
@@ -79,8 +79,11 @@ std::vector<std::pair<int, double>> searchEngine::search(const std::string &quer
 {
     std::cout << "[Debug - searchEngine::search] Function ended search" << std::endl;
     std::vector<std::string> tokens = tokenzie(query);
+    std::unordered_map<int, double> docScores;
     double tokenFrequency = 0;
     double IDF = 0;
+    double relevanceScore = 0;
+    std::vector<std::pair<int, double>> results;
     for (const auto &token : tokens)
     {
         auto it = invertedIndex.find(token);
@@ -91,15 +94,24 @@ std::vector<std::pair<int, double>> searchEngine::search(const std::string &quer
             {
                 tokenFrequency = static_cast<double>(pair.second);
                  IDF = std::log(static_cast<double>(totalDocs) / tokenFrequency);
-
-                std::cout << "  Doc ID: " << pair.first << ", Frequency: " << pair.second << std::endl;
+                 relevanceScore = IDF * tokenFrequency;
+                docScores.insert({pair.first, relevanceScore});
+               
             }
         }
         else
         {
-            std::cout << "Token '" << token << "' not found." << std::endl;
+           std::cout << "[Debug - searchEngine::search] Token: " << token << " not found"  << std::endl;
         }
     }
+     for(const auto pair : docScores){
+           results.push_back(pair);
+        }
+      std::sort(results.begin(), results.end(),
+              [](const std::pair<int, double>& a, const std::pair<int, double>& b) {
+                  return a.second > b.second; // Sort by score in descending order
+              });
+    return results;
 }
 const std::unordered_map<std::string, std::map<int, int>> &searchEngine::getIndex() const
 {

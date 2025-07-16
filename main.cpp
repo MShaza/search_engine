@@ -12,7 +12,7 @@ int main(){
     //    std::cout<<"[Debugh - main]"<<token<<std::endl;
     //}
     engine.buildIndex();
-    engine.search("Chatgpt is awesome");
+    auto results = engine.search("chatgpt work");
     /**auto index = engine.getIndex();
     for (const auto& [token, docMap] : index) {
         std::cout << token << " => ";
@@ -22,5 +22,9 @@ int main(){
         std::cout << "\n";
     }**/
     
+
+    for (const auto& [docID, score] : results) {
+    std::cout << "Doc " << docID << " — Score: " << score << "\n";
+    }
     return 0;
 }

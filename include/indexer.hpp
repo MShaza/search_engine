@@ -6,7 +6,10 @@
 #include <set>
 #include <sstream>
 #include "id_generator.hpp"
-#include <match.h>
+#include <math.h>
+#include <utility>
+#include <vector>
+#include <algorithm>
 class searchEngine
 {
 private:
